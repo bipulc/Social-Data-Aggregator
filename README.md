@@ -15,5 +15,5 @@ This project attempt to build an application to collect user feedback for a bran
 
 ## Logical Architecture
 
-
+![alt text](logical_architecture.tiff)
 
