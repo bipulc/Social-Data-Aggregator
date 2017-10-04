@@ -13,4 +13,7 @@ This project attempt to build an application to collect user feedback for a bran
 - Result can optionally be categorised geographically.
     e.g. - Where was XBOX most popular in last 24 hours ?
 
+## Logical Architecture
+
+
 
