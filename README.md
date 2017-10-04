@@ -17,3 +17,6 @@ This project attempt to build an application to collect user feedback for a bran
 
 ![Logical Architecture](https://github.com/bipulc/sentiment_analysis/blob/master/logical_architecture.jpg)
 
+## Data Collector and Loader
+
+Data Collector is written in Python using [Tweepy](http://docs.tweepy.org/en/v3.5.0/getting_started.html).
