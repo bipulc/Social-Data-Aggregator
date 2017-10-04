@@ -1,0 +1,17 @@
+# Do not change the Section Name
+[Section 1]
+
+# log file location
+logfile = /Users/bipul/python/tools/sentiment_analysis/log/sentiment_analysis.log
+
+# directory to store data feed if storage is localfs
+localfs_datadir = /Users/bipul/python/tools/sentiment_analysis/localfs_data
+
+# Storage type [ should be one of locafs|hadoop|hbase|kafka|oracle_event_hub|google_pubsub]
+storage_type = localfs
+
+# Authentication file for twitter API Keys
+twitter_auth = /Users/bipul/python/tools/sentiment_analysis/etc/twitter_auth
+
+# Tokens to filter on
+twitter_tokens = 'python','ruby','javascript'
