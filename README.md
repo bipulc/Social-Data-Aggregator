@@ -15,5 +15,5 @@ This project attempt to build an application to collect user feedback for a bran
 
 ## Logical Architecture
 
-![alt text](logical_architecture.tiff)
+![Logical Architecture](https://github.com/bipulc/sentiment_analysis/blob/master/logical_architecture.jpg)
 
