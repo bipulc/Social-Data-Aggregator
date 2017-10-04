@@ -21,3 +21,4 @@ This project attempt to build an application to collect user feedback for a bran
 
 Data Collector is written in Python using [Tweepy](http://docs.tweepy.org/en/v3.5.0/getting_started.html). The basic structure of Collector is pretty simple. It implements following features (some of them still to be written).
 
+![Data Collection](https://github.com/bipulc/sentiment_analysis/blob/master/DataCollection.jpg)
