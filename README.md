@@ -1,5 +1,8 @@
 # Sentiment Analytics Project
 
+#### Started - 29 Sep 2017
+#### In progress
+
 This project attempt to build an application to collect user feedback for a brand (e.g. Nike) or an institution (e.g. Harrow Council) from social media sites primarily twitter and facebook, and categorise as positive or negative sentiment.
 
 ## High Level use cases:
