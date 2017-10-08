@@ -32,7 +32,6 @@ def validate_twitter_auth(twitter_auth):
         return 1
 
 # Read API Keys and Tokens from Auth file
-
 def read_twitter_auth(twitter_auth):
     '''Read Key and Tokens from auth file and return a dictionary'''
 
@@ -44,15 +43,18 @@ def read_twitter_auth(twitter_auth):
     return auth_dict
 
 
+# Class to implement tweepy StreamListener and override on_data method to write to local FS.
 class localFSWriter(tweepy.StreamListener):
 
     def __init__ (self, ofile):
         self.ofile = ofile
 
+    # Write to local Filesystem
     def on_data(self, data):
         self.ofile.write(data)
         return True
 
+    # If disconnected due to rate limit, then do not retry
     def on_error(self, status_code):
         if status_code == 420:
             # returning False in on_data disconnects the stream
@@ -60,6 +62,9 @@ class localFSWriter(tweepy.StreamListener):
             # http://docs.tweepy.org/en/v3.5.0/streaming_how_to.html#handling-errors
             return False
 
+
+# Function to create authorisation handler, object of localFSWriter and Streams
+# to start collecting data and storing data on local filsystem.
 
 def twitterDataLocalFS(twitter_auth_dict, localfs_datadir, twitter_tokens):
 
