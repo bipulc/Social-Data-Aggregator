@@ -52,7 +52,7 @@ Example of collecting twitter streaming data and store to local FS
 ```
 
 ## Analytics 
-To analyse data in real-time, I will be using Spark. Detailed analysis of component required as well as algorithm for analytics in pending. I may use an out of box analytics service available on Oracle or Google Cloud Platform. Details TBD.
+To analyse data in real-time, I will be using Spark. Detailed analysis of components required as well as algorithm for analytics is pending. I may use an out of box analytics service available on Oracle or Google Cloud Platform. Details TBD.
 
 ## User Interface
 There will be two distince user interface. 
