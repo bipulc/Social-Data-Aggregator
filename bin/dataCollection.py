@@ -61,7 +61,5 @@ libdataCollection.log(twitter_auth_dict)
 if storage_type == 'localfs':
     libdataCollection.twitterDataLocalFS(twitter_auth_dict, localfs_datadir, twitter_tokens)
 
-# Store Data. Should be able to store in one of the following storage system
-
 
 
