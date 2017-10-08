@@ -2,7 +2,6 @@
 
 '''
 Data Collector for Sentiment Analysis Project
-Some code taken from http://adilmoujahid.com/posts/2014/07/twitter-analytics/
 '''
 
 import argparse, logging, ConfigParser
