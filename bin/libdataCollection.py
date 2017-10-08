@@ -78,7 +78,7 @@ def twitterDataLocalFS(twitter_auth_dict, localfs_datadir, twitter_tokens):
     auth.set_access_token(twitter_auth_dict['ACCESS_TOKEN'], twitter_auth_dict['ACCESS_TOKEN_SECRET'])
     stream = tweepy.Stream(auth, l)
 
-    #This line filter Twitter Streams to capture data by the keywords: 'python', 'javascript', 'ruby'
+    #This line filter Twitter Streams to capture data for toekns in variable twirtter_tokens
 
     stream.filter(track=twitter_tokens)
 
