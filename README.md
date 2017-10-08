@@ -34,8 +34,25 @@ The basic structure of Collector is pretty simple. It will implement following f
 
 ![Data Collection](https://github.com/bipulc/sentiment_analysis/blob/master/DataCollection_twitter_fb.jpg)
 
+## Collecting Data
+
+dataCollection.py usage:
+```
+usage: dataCollection.py [-h] -c C -s S
+
+optional arguments:
+  -h, --help  show this help message and exit
+  -c C        configuration file
+  -s S        data source
+```
+Example of collecting twitter streaming data and store to local FS
+
+```
+./dataCollection.py -c ../etc/configfile -s twitter
+```
+
 ## Analytics 
-To analyse data in real-time, I will be using Spark. Detailed analysis of component required as well as algorithm for analytics in pending. I may use an out of box analytics service available on Oracle or Google Cloud Platform. Detail TBD.
+To analyse data in real-time, I will be using Spark. Detailed analysis of component required as well as algorithm for analytics in pending. I may use an out of box analytics service available on Oracle or Google Cloud Platform. Details TBD.
 
 ## User Interface
 There will be two distince user interface. 
