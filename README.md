@@ -35,7 +35,7 @@ The basic structure of Collector is pretty simple. It will implement following f
 ![Data Collection](https://github.com/bipulc/sentiment_analysis/blob/master/DataCollection_twitter_fb.jpg)
 
 ## Analytics 
-To analyse data in real-time, I will be using Spark. Detail analysis of component required as well as algorithm for analytics in pending. I may use an out of box analytics service available on Oracle or Google Cloud Platform. Detail TBD.
+To analyse data in real-time, I will be using Spark. Detailed analysis of component required as well as algorithm for analytics in pending. I may use an out of box analytics service available on Oracle or Google Cloud Platform. Detail TBD.
 
 ## User Interface
 There will be two distince user interface. 
