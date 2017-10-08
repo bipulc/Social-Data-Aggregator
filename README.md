@@ -55,8 +55,9 @@ Example of collecting twitter streaming data and store to local FS
 To analyse data in real-time, I will be using Spark. Detailed analysis of components required as well as algorithm for analytics is pending. I may use an out of box analytics service available on Oracle or Google Cloud Platform. Details TBD.
 
 ## User Interface
-There will be two distince user interface. 
+There will be two distinct user interface. 
 1.  To allow users to input the tokens for which they would like to collect data and analyse.
 2.  To view the result of analysis.
 
 UI will be very simple, unless I find a contributor willing to spend time on developing UI. It will be written using Python Flask framework.
+
