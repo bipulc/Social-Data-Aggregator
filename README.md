@@ -1,4 +1,4 @@
-# Sentiment Analytics Project
+# Social Data Aggregator Project
 
 #### Started - 29 Sep 2017
 #### In progress
