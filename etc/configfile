@@ -7,11 +7,18 @@ logfile = /Users/bipul/python/tools/sentiment_analysis/log/sentiment_analysis.lo
 # directory to store data feed if storage is localfs
 localfs_datadir = /Users/bipul/python/tools/sentiment_analysis/localfs_data
 
-# Storage type [ should be one of locafs|hadoop|hbase|kafka|oracle_event_hub|google_pubsub]
-storage_type = localfs
+# Storage type [ should be one of locafs|kafka]
+# storage_type = localfs
+storage_type = kafka
 
 # Authentication file for twitter API Keys
 twitter_auth = /Users/bipul/python/tools/sentiment_analysis/etc/twitter_auth
 
 # Tokens to filter on
-twitter_tokens = 'python','ruby','javascript'
+twitter_tokens = Nike,Addidas,Reebok
+
+# Kafka Broker
+kafka_broker = localhost:9092
+
+# Kafka twitter topic
+kafka_twitter_topic = twitter_raw_data

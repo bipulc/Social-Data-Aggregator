@@ -6,6 +6,8 @@ Data collection library of functions
 
 import os, logging
 import tweepy
+from confluent_kafka import Producer
+
 
 # Configure logging
 
@@ -32,6 +34,7 @@ def validate_twitter_auth(twitter_auth):
         return 1
 
 # Read API Keys and Tokens from Auth file
+
 def read_twitter_auth(twitter_auth):
     '''Read Key and Tokens from auth file and return a dictionary'''
 
@@ -43,18 +46,15 @@ def read_twitter_auth(twitter_auth):
     return auth_dict
 
 
-# Class to implement tweepy StreamListener and override on_data method to write to local FS.
 class localFSWriter(tweepy.StreamListener):
-
+    '''class for writing twitter data to local fs'''
     def __init__ (self, ofile):
         self.ofile = ofile
 
-    # Write to local Filesystem
     def on_data(self, data):
         self.ofile.write(data)
         return True
 
-    # If disconnected due to rate limit, then do not retry
     def on_error(self, status_code):
         if status_code == 420:
             # returning False in on_data disconnects the stream
@@ -63,11 +63,8 @@ class localFSWriter(tweepy.StreamListener):
             return False
 
 
-# Function to create authorisation handler, object of localFSWriter and Streams
-# to start collecting data and storing data on local filsystem.
-
 def twitterDataLocalFS(twitter_auth_dict, localfs_datadir, twitter_tokens):
-
+    '''Wrapper to create object of localFSWriter class passing authentication etc and call tweepy Stream '''
     filename = 'twitter_feed.dat'
     ofile = open(os.path.join(localfs_datadir,filename),'w')
 
@@ -78,7 +75,57 @@ def twitterDataLocalFS(twitter_auth_dict, localfs_datadir, twitter_tokens):
     auth.set_access_token(twitter_auth_dict['ACCESS_TOKEN'], twitter_auth_dict['ACCESS_TOKEN_SECRET'])
     stream = tweepy.Stream(auth, l)
 
-    #This line filter Twitter Streams to capture data for toekns in variable twirtter_tokens
+    #This line filter Twitter Streams to capture data by the keywords: 'python', 'javascript', 'ruby'
+
+    # print twitter_tokens
+    # print type(twitter_tokens)
+    stream.filter(track=twitter_tokens)
+    #stream.filter(track=['python','ruby','javascript'])
+
+
+class KafkaProducerTwitter(tweepy.StreamListener):
+    '''class for writing twitter data to kafka topic'''
+    def __init__ (self, kafkaproducer, topic):
+        self.kafkaproducer = kafkaproducer
+        self.topic = topic
+
+    def on_data(self, data):
+        try:
+            #Write to Kafka topic
+            self.kafkaproducer.produce(self.topic, data)
+        except BufferError as e:
+            log('{:30} {:30}'.format('Local queue is full. Awaiting delivery of messages -',len(self.kafkaproducer.produce)))
+
+        return True
+
+    def on_error(self, status_code):
+        if status_code == 420:
+            # returning False in on_data disconnects the stream
+            # to protect from danger of rate limiting
+            # http://docs.tweepy.org/en/v3.5.0/streaming_how_to.html#handling-errors
+            return False
+
+def twitterDataKafka(twitter_auth_dict, kafka_broker, kafka_twitter_topic, twitter_tokens):
+    '''Wrapper to create object of KafkaProducerTwitter class passing authentication etc and call tweepy Stream'''
+    # Create producer Instance
+
+    producerConf = {'bootstrap.servers':kafka_broker}
+
+    p = Producer(**producerConf)
+
+    # Create KafkaProducerTwitter Instance
+
+    k = KafkaProducerTwitter(p, kafka_twitter_topic)
+
+    # Authenticate
+
+    auth = tweepy.OAuthHandler(twitter_auth_dict['API_KEY'], twitter_auth_dict['API_SECRET'])
+    auth.set_access_token(twitter_auth_dict['ACCESS_TOKEN'], twitter_auth_dict['ACCESS_TOKEN_SECRET'])
+
+    # Create tweepy Stream instance
+
+    stream = tweepy.Stream(auth, k)
+
+    # Filter streaming data for interested tokens.
 
     stream.filter(track=twitter_tokens)
-
