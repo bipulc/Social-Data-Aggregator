@@ -1,7 +1,7 @@
 #! /usr/bin/env python
 
 '''
-Data Collector for Sentiment Analysis Project
+Data Collector for Social Data Aggregator Project
 '''
 
 import argparse, logging, ConfigParser
