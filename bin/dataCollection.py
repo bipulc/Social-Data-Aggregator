@@ -25,7 +25,8 @@ cp = ConfigParser.ConfigParser()
 cp.read(config_file)
 
 parameters = dict(cp.items('Section 1'))
-logfile = parameters['logfile']
+logfile_dir = parameters['logfile_dir']
+collection_log_file = parameters['collection_log_file']
 storage_type = parameters['storage_type']
 twitter_auth = parameters['twitter_auth']
 twitter_tokens = parameters['twitter_tokens']
@@ -38,7 +39,9 @@ if storage_type == 'localfs':
     localfs_datadir = parameters['localfs_datadir']
 elif storage_type == 'kafka':
     kafka_broker = parameters['kafka_broker']
-    kafka_twitter_topic = parameters['kafka_twitter_topic']
+    kafka_topic = parameters['kafka_topic']
+
+logfile = logfile_dir + collection_log_file
 
 # Set logging and print name of logfile to check
 loglevel="INFO"
@@ -55,7 +58,7 @@ if storage_type == 'localfs':
     libdataCollection.log('{:30} {:30}'.format('localfs datadir', localfs_datadir))
 if storage_type == 'kafka':
     libdataCollection.log('{:30} {:30}'.format('kafka_broker',kafka_broker))
-    libdataCollection.log('{:30} {:30}'.format('kafka_topic',kafka_twitter_topic))
+    libdataCollection.log('{:30} {:30}'.format('kafka_topic',kafka_topic))
 libdataCollection.log('{:90}'.format("-" * 90))
 libdataCollection.log(' ')
 
@@ -78,7 +81,7 @@ if storage_type == 'localfs':
         raise SystemExit(1)
 elif storage_type == 'kafka':
     try:
-        libdataCollection.twitterDataKafka(twitter_auth_dict,kafka_broker,kafka_twitter_topic,twitter_tokens)
+        libdataCollection.twitterDataKafka(twitter_auth_dict,kafka_broker,kafka_topic,twitter_tokens)
     except KeyboardInterrupt:
         libdataCollection.log('{:90}'.format('Control-C : Program Interrupted'))
         raise SystemExit(1)

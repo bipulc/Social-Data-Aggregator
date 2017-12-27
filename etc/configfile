@@ -1,14 +1,15 @@
 # Do not change the Section Name
 [Section 1]
 
-# log file location
-logfile = /Users/bipul/python/tools/sentiment_analysis/log/sentiment_analysis.log
+# log file location and name
+logfile_dir = /Users/bipul/python/tools/sentiment_analysis/log/
+collection_log_file = collect.log
+writer_log_file = writer.log
 
 # directory to store data feed if storage is localfs
 localfs_datadir = /Users/bipul/python/tools/sentiment_analysis/localfs_data
 
 # Storage type [ should be one of locafs|kafka]
-# storage_type = localfs
 storage_type = kafka
 
 # Authentication file for twitter API Keys
@@ -20,5 +21,20 @@ twitter_tokens = Nike,Addidas,Reebok
 # Kafka Broker
 kafka_broker = localhost:9092
 
-# Kafka twitter topic
-kafka_twitter_topic = twitter_raw_data
+# Kafka topic
+kafka_topic = twitter_raw_data
+
+# Persistent Storage type - Historical Data [ should be one of localfs | hdfs ]
+persistent_storage = localfs
+
+# Consumer Group name
+consumer_group = twitter_raw_data
+
+# Consumer Name
+consumer_name = c1
+
+# Max Localfs File size in Bytes
+max_localfs_file_size = 104857600
+
+# localfs file format
+localfs_file_format = consumer_group.consumer_name.timestamp

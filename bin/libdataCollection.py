@@ -100,17 +100,17 @@ class KafkaProducerTwitter(tweepy.StreamListener):
             # http://docs.tweepy.org/en/v3.5.0/streaming_how_to.html#handling-errors
             return False
 
-def twitterDataKafka(twitter_auth_dict, kafka_broker, kafka_twitter_topic, twitter_tokens):
+def twitterDataKafka(twitter_auth_dict, kafka_broker, kafka_topic, twitter_tokens):
     '''Wrapper to create object of KafkaProducerTwitter class passing authentication etc and call tweepy Stream'''
     # Create producer Instance
 
-    producerConf = {'bootstrap.servers':kafka_broker}
+    producerConf = {'bootstrap.servers':kafka_broker,'acks':0, 'default.topic.config': {'compression.codec': 'snappy'}}
 
     p = Producer(**producerConf)
 
     # Create KafkaProducerTwitter Instance
 
-    k = KafkaProducerTwitter(p, kafka_twitter_topic)
+    k = KafkaProducerTwitter(p, kafka_topic)
 
     # Authenticate
 
