@@ -7,7 +7,7 @@ collection_log_file = collect.log
 writer_log_file = writer.log
 
 # directory to store data feed if storage is localfs
-localfs_datadir = /Users/bipul/python/tools/sentiment_analysis/localfs_data
+localfs_datadir = /Users/bipul/python/tools/sentiment_analysis/localfs_data/
 
 # Storage type [ should be one of locafs|kafka]
 storage_type = kafka
@@ -36,5 +36,5 @@ consumer_name = c1
 # Max Localfs File size in Bytes
 max_localfs_file_size = 104857600
 
-# localfs file format
+# localfs file format [do not change]
 localfs_file_format = consumer_group.consumer_name.timestamp
