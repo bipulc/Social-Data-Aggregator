@@ -30,8 +30,8 @@ persistent_storage = localfs
 # Consumer Group name
 consumer_group = twitter_raw_data
 
-# Consumer Name
-consumer_name = c1
+# Consumer Names
+consumer_names = c1,c2
 
 # Max Localfs File size in Bytes
 max_localfs_file_size = 104857600
