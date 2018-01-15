@@ -1,0 +1,168 @@
+Confluent Kafka 3.3.1 and Kafka Python Client Installation on a Single Node VM
+I am using a Virtual Machine running Centos 7 on Oracle Cloud. However, the following installation procedure will work on Centos 6 or 7 running on local machine or any Cloud.
+
+Software
+
+Following softwares are pre-requisite for Confluent Kafka. I have used Open Source confluent kafka version 3.3.1 for my development. To do - upgrade kafka to 4.0. 
+
+I have used Python to develop the data collection and writer code and thats the reason for using Confluent Kafka and not Apache Kafka. Confluent Kafka supports API in many other programming language including Python.
+
+Java - jdk-8u151-linux-x64.rpm
+Confluent Kafka - confluent-oss-3.3.1-2.11.tar.gz
+Confluent Kafka Python client
+DataCollector-Writer -  from github
+
+Directory structure
+
+/kafka  - For Kafka log file
+/bdsw - For software installation
+/bdsw/Social-Data-Aggregator-master - For dataCollection and dataWriter code
+
+Copy Java anad Confluent Kafka software files to /bdsw
+
+Install Oracle Java
+
+sudo rpm -Uvh /bdsw/jdk-8u151-linux-x64.rpm
+
+Install Confluent Kafka 3.3.1
+
+gunzip confluent-oss-3.3.1-2.11.tar.gz
+tar xvf confluent-oss-3.3.1-2.11.tar.gz
+
+Add hostname to /etc/hosts
+
+Kafka processes need to resolve hostname from IP addresses. On one occasion, kafka processes failed to start due to missing hostname from /etc/hosts file and as a resolution / workaround add hostname to /etc/hosts file.
+
+Start Confluent Kafka
+
+cd /bdsw/confluent-3.3.1/bin
+./confluent start
+
+[ravello@k-node1 bin]$ ./confluent start
+Starting zookeeper
+zookeeper is [UP]
+Starting kafka
+kafka is [UP]
+Starting schema-registry
+schema-registry is [UP]
+Starting kafka-rest
+kafka-rest is [UP]
+Starting connect
+connect is [UP]
+
+
+
+Check Status
+
+[ravello@k-node1 bin]$ ./confluent status
+connect is [UP]
+kafka-rest is [UP]
+schema-registry is [UP]
+kafka is [UP]
+zookeeper is [UP]
+
+
+Change location of log directory
+
+By default, the Confluent Kafka writes data to /tmp directory
+
+-rw-rw-r--. 1 ravello ravello   24 Jan 10 16:45 confluent.current
+drwx------. 7 ravello ravello 4096 Jan 10 16:46 confluent.S9PSJvdk
+
+The actual location is in file /tmp/confluent.current.
+
+In order to write Kafka topic data to location other than /tmp, 
+
+modify server.properties file in /bdsw/confluent-3.3.1/etc/kafka directory.
+
+Uncomment 
+#delete.topic.enable=true  to allow deletion of topic
+
+# A comma seperated list of directories under which to store log files
+#log.dirs=/tmp/kafka-logs
+log.dirs=/kafka/data
+
+modify zookeeper.properties file
+
+# the directory where the snapshot is stored.
+#dataDir=/tmp/zookeeper
+dataDir=/kafka/zookeeper
+
+and restart confluent
+
+Install Confluent Kafka python client
+
+On Centos 6
+Install Python 2.7 
+
+https://danieleriksson.net/2017/02/08/how-to-install-latest-python-on-centos/
+
+# Install gcc
+sudo yum install gcc
+# Install librdkafka-devel
+
+Need to enable REMI repo for librdkafka-devel in Centos 6.
+
+sudo wget http://rpms.famillecollet.com/enterprise/remi-release-6.rpm
+sudo rpm -Uvh remi-release-6.rpm
+sudo yum --enablerepo=remi install librdkafka-devel
+
+# Install confluent-kafka
+sudo pip27 install confluent-kafka
+
+On Centos 7
+
+# Install Python 2.7
+https://danieleriksson.net/2017/02/08/how-to-install-latest-python-on-centos/
+
+# Install gcc
+sudo yum install gcc
+
+# Install librdkafka-devel
+sudo yum install librdkafka-devel
+
+# Install confluent-kafka
+pip install python-devel
+pip install confluent-kafka
+
+Install Data-Aggregator scripts
+
+Download code from github using “clone or download -> download zip” and transfer the archive Social-Data-Aggregator-master.zip to the target host. Unzip the archive and you will have the following directory and files.
+
+Social-Data-Aggregator-master/
+├── DataCollection_twitter_fb.jpg
+├── README.md
+├── bin
+│   ├── dataCollection.py
+│   ├── dataWriter.py
+│   ├── libdataCollection.py
+│   └── libdataWriter.py
+├── etc
+│   └── configfile
+└── logical_architecture.jpg
+
+Before using the dataCollection or dataWriter code, you need to review and modify configfile. All the attributes in the configfile have comments associated with them. Change the location to write log file, out put files and also the tokens to collect.
+
+Create Kafka Topic
+
+Before start collecting data, create the kafka topic. I am using a topic with 2 partitions (as I will have 2 consumers). Replication factor is 1 as it is a single broker installation.
+
+Navigate to /bdsw/confluent-3.3.1 /bin and execute
+
+./kafka-topics --zookeeper localhost:2181 --create --topic twitter_raw_data --replication-factor 1 --partitions 2
+
+And check the topic using 
+
+./kafka-topics --zookeeper localhost:2181 --list
+
+Collect Twitter Data
+
+Navigate to Social-Data-Aggregator-master/bin
+
+./dataCollection.py -c ../etc/configfile -s twitter
+
+Write Data to local FS
+
+Navigate to Social-Data-Aggregator-master/bin
+
+./dataWriter.py -c ../etc/configfile
