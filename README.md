@@ -73,3 +73,5 @@ There will be two distinct user interface.
 
 UI will be very simple, unless I find a contributor willing to spend time on developing UI. It will be written using Python Flask framework.
 
+## Project wiki
+More documentation such as installation instructions, explanation of parameters in configfile etc will be maintained in the Project [Wiki page](https://github.com/bipulc/Social-Data-Aggregator/wiki).
