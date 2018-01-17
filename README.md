@@ -26,13 +26,9 @@ This project attempts to build an application to collect user feedback for a bra
 Data Collector: Python script dataCollection.py in bin directory will implement the following 
 
 - To collect data on local filesystem (completed), using [Tweepy](http://docs.tweepy.org/en/v3.5.0/getting_started.html). 
-- To collect data in Kafka (in progress), using kafka producer using twitter stream (hosebird client)
+- To collect data in Kafka (completed), using kafka producer and tweepy.
+- To write data from kafka topic to local filesystem (completed).
 - Kafka to HDFS using flume (to be developed)
-
-
-The basic structure of Collector is pretty simple. It will implement following features (some of them still to be written).
-
-![Data Collection](https://github.com/bipulc/sentiment_analysis/blob/master/DataCollection_twitter_fb.jpg)
 
 ## Collecting Data
 
