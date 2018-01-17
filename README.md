@@ -47,6 +47,22 @@ Example of collecting twitter streaming data and store to local FS
 ./dataCollection.py -c ../etc/configfile -s twitter
 ```
 
+## Writing data to disk (long term retention)
+
+dataWriter.py usage:
+```
+usage: dataWriter.py [-h] -c C
+
+optional arguments:
+  -h, --help  show this help message and exit
+  -c C        configuration file
+```
+Example of writing data from Kafka topic to local filesyste,
+
+```
+./dataWriter.py -c ../etc/configfile
+```
+
 ## Analytics 
 To analyse data in real-time, I will be using Spark. Detailed analysis of components required as well as algorithm for analytics is pending. I may use an out of box analytics service available on Oracle or Google Cloud Platform. Details TBD.
 
