@@ -26,13 +26,9 @@ This project attempts to build an application to collect user feedback for a bra
 Data Collector: Python script dataCollection.py in bin directory will implement the following 
 
 - To collect data on local filesystem (completed), using [Tweepy](http://docs.tweepy.org/en/v3.5.0/getting_started.html). 
-- To collect data in Kafka (in progress), using kafka producer using twitter stream (hosebird client)
+- To collect data in Kafka (completed), using kafka producer and tweepy.
+- To write data from kafka topic to local filesystem (completed).
 - Kafka to HDFS using flume (to be developed)
-
-
-The basic structure of Collector is pretty simple. It will implement following features (some of them still to be written).
-
-![Data Collection](https://github.com/bipulc/sentiment_analysis/blob/master/DataCollection_twitter_fb.jpg)
 
 ## Collecting Data
 
@@ -51,6 +47,22 @@ Example of collecting twitter streaming data and store to local FS
 ./dataCollection.py -c ../etc/configfile -s twitter
 ```
 
+## Writing data to disk (long term retention)
+
+dataWriter.py usage:
+```
+usage: dataWriter.py [-h] -c C
+
+optional arguments:
+  -h, --help  show this help message and exit
+  -c C        configuration file
+```
+Example of writing data from Kafka topic to local filesyste,
+
+```
+./dataWriter.py -c ../etc/configfile
+```
+
 ## Analytics 
 To analyse data in real-time, I will be using Spark. Detailed analysis of components required as well as algorithm for analytics is pending. I may use an out of box analytics service available on Oracle or Google Cloud Platform. Details TBD.
 
@@ -61,3 +73,5 @@ There will be two distinct user interface.
 
 UI will be very simple, unless I find a contributor willing to spend time on developing UI. It will be written using Python Flask framework.
 
+## Project wiki
+More documentation such as installation instructions, explanation of parameters in configfile etc will be maintained in the Project [Wiki page](https://github.com/bipulc/Social-Data-Aggregator/wiki).
