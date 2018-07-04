@@ -1,0 +1,32 @@
+
+-- Example from documnetation
+
+gcloud dataproc jobs submit spark --cluster sda-dataproc-c01 --region us-west1 \
+  --class org.apache.spark.examples.SparkPi \
+  --jars file:///usr/lib/spark/examples/jars/spark-examples.jar -- 1000
+
+
+-- PySpark Tweet Analysis job -- make sure the script file is copied to master node of the cluster
+
+gcloud dataproc jobs submit pyspark --cluster sda-dataproc-c01 --region us-west1 file:///home/bipul873/analyseTweet_df.py
+
+-- Move files to new name
+
+ls tw*:*.gz | while read fname
+do 
+nfname=`echo $fname| awk -F: '{print $1$2$3}'` 
+mv $fname $nfname
+done
+
+-- Move files to new name in Cloud Storage
+
+gsutil ls gs://sda_tweet_data/*-??:* | while read fname 
+do 
+nfname=`echo $fname| awk -F: '{print $1":"$2$3$4}'` 
+echo $nfname
+gsutil mv  $fname $nfname 
+done
+
+
+-- TO DO --
+-- Create dataproc cluster using CLI
