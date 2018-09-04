@@ -1,0 +1,8 @@
+Architecture to deploy on Google Cloud Platform.
+
+Docker Image to pull tweets
+Run Docker Containers on GKE
+Push tweets to Pub/Sub
+Data Flow to read tweets and call ML API for sentiment analysis
+Push result to Cloud SQL
+Front end on Google App Engine
